@@ -5,7 +5,7 @@ const render = new Poco(screen);
 // Fonts
 const timeFont = new render.Font("Bitham-Bold", 42);
 const dateFont = new render.Font("Gothic-Bold", 24);
-const beerFont = new render.Font("Gothic-Bold", 24);
+const beerFont = new render.Font("Roboto-Condensed", 21);
 
 // Colors
 const black = render.makeColor(0, 0, 0);
@@ -28,6 +28,9 @@ const MONTHS = [
   "Dec",
 ];
 
+function getCity(hours, minutes) {
+  return "Dubai";
+}
 function draw(event) {
   const now = event.date;
 
@@ -64,19 +67,18 @@ function draw(event) {
     render.height / 2 + 10,
   );
 
-  if (now.getMinutes() <= 4) {
-    const beerStr = `Its beerO'clock in .. `;
-    width = render.getTextWidth(beerStr, beerFont);
-    render.drawText(
-      beerStr,
-      beerFont,
-      white,
-      (render.width - width) / 2,
-      render.height / 2 + 10,
-    );
-  }
+  const beerStr = "beer O'clock " + getCity(now.getHours(), now.getMinutes());
+  width = render.getTextWidth(beerStr, beerFont);
+  render.drawText(
+    beerStr,
+    beerFont,
+    white,
+    (render.width - width) / 2,
+    render.height / 2 + 35,
+  );
+
   render.end();
 }
 
-// Update every minute (fires immediately when registered)
 watch.addEventListener("minutechange", draw);
+// Update every minute (fires immediately when registered)
