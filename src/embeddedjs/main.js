@@ -28,9 +28,15 @@ const MONTHS = [
   "Dec",
 ];
 
-function getCity(hours, minutes) {
-  return "Dubai";
+function getTimezone(date) {
+  return date.getTimezoneOffset() / 60;
 }
+
+function getCity(date) {
+  const zone = getTimezone(date);
+  return `Dubai ${zone}`;
+}
+
 function draw(event) {
   const now = event.date;
 
@@ -67,7 +73,7 @@ function draw(event) {
     render.height / 2 + 10,
   );
 
-  const beerStr = "beer O'clock " + getCity(now.getHours(), now.getMinutes());
+  const beerStr = "beer O'clock " + getCity(now);
   width = render.getTextWidth(beerStr, beerFont);
   render.drawText(
     beerStr,
